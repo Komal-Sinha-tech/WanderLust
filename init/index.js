@@ -14,11 +14,13 @@ async function main(){
     await mongoose.connect(MONGO_URL);
 }
 
-const initDB = async ()=>{
-    await Listing.deleteMany({}); //{} this is filter function delete everything
+
+const initDB = async () => {
+    await Listing.deleteMany({});
     await Listing.insertMany(initData.data);
-    console.log("data was initialised");
+    console.log("Database initialized");
 };
+
 
 initDB();
 
