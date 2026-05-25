@@ -78,6 +78,9 @@ app.post("/listings", wrapAsync(async(req,res,next)=>{
         throw new ExpressError(400,"send valid data for listing");
     }
     const newListing = new Listing (req.body.listing);
+    if(!req.body.listing){
+        throw new ExpressError(400,"send valid data for listing");
+    }
     await newListing.save();
     res.redirect("/listings");
 }));
@@ -113,7 +116,7 @@ app.use((req, res, next) => {
 
 app.use((err,req,res,next)=>{
     let{status=500,message="something went wrong"}= err;
-   res.render("listings/error.ejs", { err });
+   res.status(status).render("listings/error.ejs", { message });
     // res.status(status).send(message);
 });
 
