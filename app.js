@@ -44,15 +44,16 @@ const validateListing = (req,res,next)=>{
    }
 }
 
-const validateReview = (req,res,next)=>{
-    let {error} = reviewSchema.validate(req.body);
-   let errMsg = error.details.map((el)=>el.message).join(",");
-   if(error){
-    throw new ExpressError(400,errMsg);
-   }else{
-    next();
-   }
-}
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
+
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+};
 
 
 //root route
@@ -87,15 +88,12 @@ app.get("/listings/new",wrapAsync(async(req,res)=>{
 
 //show Route
 app.get("/listings/:id", wrapAsync(async(req,res)=>{
-    try{
+    
       let {id}= req.params;
-     const listing = await Listing.findById(id);
-    res.render("./listings/show.ejs",{listing});
-    }catch(err){
-        next(err);
-    }
-   
-}));
+     const listing = await Listing.findById(id).populate("reviews");
+    res.render("./listings/show.ejs",{listing});   
+})
+);
 
 //Create Route
 app.post("/listings", validateListing,wrapAsync(async(req,res,next)=>{
@@ -144,7 +142,7 @@ let newReview = new Review(req.body.review);
   await listing.save();
 
   console.log("new review saved");
-  res.send("new review saved");
+ 
 
   res.redirect(`/listings/${listing._id}`);
 
