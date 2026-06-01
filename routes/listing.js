@@ -74,7 +74,14 @@ router.get("/:id/edit", wrapAsync(async (req, res) => {
 //Update Route
 router.put("/:id", validateListing, wrapAsync(async (req, res) => {
   let { id } = req.params;
+
+  req.body.listing.image = {
+    url: req.body.listing.image,
+    filename: "listingimage"
+  };
+
   await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
   res.redirect(`/listings/${id}`);
 }));
 

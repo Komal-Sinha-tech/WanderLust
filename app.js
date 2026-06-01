@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const session = require ("express-session");
 
 //routes
 const listings = require("./routes/listing.js");
@@ -31,8 +32,19 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+//routes connect
 app.use("/listings",listings);
 app.use("/listings/:id/reviews",reviews);
+
+//session
+const sessionOptions = {
+    secret:"secretCode",
+    resave:false,
+    saveUninitialized:true,
+};
+
+//session connect
+  app.use(session(sessionOptions));
 
 
 //root route
