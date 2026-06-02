@@ -52,7 +52,7 @@ router.get("/:id", wrapAsync(async(req,res)=>{
 
 //Create Route
 router.post("/", validateListing,wrapAsync(async(req,res,next)=>{
-   let result = listingschema.validate(req.body);
+   let result = listingSchema.validate(req.body);
    console.log(result);
    if(result.error){
     throw new ExpressError(400,result.error);
@@ -60,7 +60,8 @@ router.post("/", validateListing,wrapAsync(async(req,res,next)=>{
     const newListing = new Listing (req.body.listing);
 
     await newListing.save();
-    res.redirect("/listings");
+   req.flash("success", "New Listing Created!");
+res.redirect("/listings");
 }));
 
 //Edit Route

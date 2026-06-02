@@ -1,11 +1,13 @@
 //Require all packages
 const express = require("express");
+const session = require ("express-session");
+const flash = require("connect-flash");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const session = require ("express-session");
+
 
 //routes
 const listings = require("./routes/listing.js");
@@ -32,25 +34,38 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-//routes connect
-app.use("/listings",listings);
-app.use("/listings/:id/reviews",reviews);
+
 
 //session
 const sessionOptions = {
     secret:"secretCode",
     resave:false,
     saveUninitialized:true,
+    cookie:{
+        express:Date.now() + 7 * 24 * 60 *60 * 100,
+        maxAge: 7 * 24 * 60 * 60 * 100,
+        httpOnly :true,
+    },
 };
-
-//session connect
-  app.use(session(sessionOptions));
-
 
 //root route
 app.get("/",(req,res)=>{
     res.send("hi, I am root");
 });
+
+app.use(session(sessionOptions));
+  app.use(flash());
+
+//session connect
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+});
+
+//routes connect
+app.use("/listings",listings);
+app.use("/listings/:id/reviews",reviews);
 
 //Error
 app.use((req, res, next) => {
