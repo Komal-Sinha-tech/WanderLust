@@ -34,5 +34,15 @@ req.flash("success","Welcome to WanderLust! You are logged in!!");
 res.redirect("/listings");
 }));
 
+router.get("/logout",(req,res,next)=>{
+    req.logOut((err)=>{
+        if(err){
+           return  next();
+        }
+        req.flash("success","You are logged out successfully!");
+        res.redirect("/listings");
+    })
+})
+
 
 module.exports = router;
