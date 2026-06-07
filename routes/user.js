@@ -14,8 +14,13 @@ try{
     const newUser = new User ({ username,email});
     const registeredUser = await  User.register (newUser,password);
     console.log(registeredUser);
-    req.flash("success","user was registered!");
-    res.redirect("/listings");
+    req.login(registeredUser,(err)=>{
+       if(err){
+           return  next();
+        }
+         req.flash("success","user was registered!");
+        res.redirect("/listings");
+    });
 } catch(e){
     req.flash("error",e.message);
     res.redirect("/signup");
