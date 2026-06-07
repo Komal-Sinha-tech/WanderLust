@@ -37,10 +37,11 @@ router.get("/",wrapAsync(async(req,res)=>{
 }));
 
 //New Route
-router.get("/new",isLoggedIn,wrapAsync,(async(req,res)=>{
+router.get("/new",isLoggedIn,wrapAsync(async(req,res)=>{
   console.log(req.user);
     res.render("./listings/new.ejs");
 }));
+
 
 //show Route
 router.get("/:id",wrapAsync(async(req,res)=>{
