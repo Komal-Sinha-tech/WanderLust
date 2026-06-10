@@ -39,13 +39,6 @@ The project is inspired by platforms like Airbnb and is built using Node.js, Exp
 - Passport.js
 - Express Session
 
-### Other Packages
-- Method Override
-- Connect Flash
-- Joi
-- Multer
-- Cloudinary
-- Dotenv
 
 ---
 
