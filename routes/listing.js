@@ -10,9 +10,9 @@ const listingController = require("../controllers/listings.js");
 router
 .route("/")
 //Index Route
-router.get(wrapAsync(listingController.index));
+.get(wrapAsync(listingController.index))
 //Create Route
-router.post(isLoggedIn, validateListing,wrapAsync(listingController.createListing));
+.post(isLoggedIn, validateListing,wrapAsync(listingController.createListing));
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
@@ -20,11 +20,11 @@ router.get("/new",isLoggedIn,listingController.renderNewForm);
 router
 .route("/:id")
 //show Route
-router.get(wrapAsync(listingController.showListing));
+.get(wrapAsync(listingController.showListing))
 //Update Route
-router.put(isLoggedIn,isOwner,validateListing,wrapAsync(listingController.updateListing));
+.put(isLoggedIn,isOwner,validateListing,wrapAsync(listingController.updateListing))
 //Delete Route
-router.delete(isLoggedIn,isOwner,listingController.destroyListing);
+.delete(isLoggedIn,isOwner,listingController.destroyListing);
 
 
 //Edit Route

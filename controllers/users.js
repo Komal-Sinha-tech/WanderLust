@@ -5,7 +5,7 @@ const User = require("../models/user.js");
     res.render("users/signup.ejs");
 }
 
-module.exports.signupUser = async(req,res)=>{
+module.exports.signupUser = async(req,res,next)=>{
 try{
      let {username,email,password}=req.body;
     const newUser = new User ({ username,email});
@@ -13,7 +13,7 @@ try{
     console.log(registeredUser);
     req.login(registeredUser,(err)=>{
        if(err){
-           return  next();
+           return  next(err);
         }
          req.flash("success","user was registered!");
         res.redirect("/listings");
@@ -31,7 +31,8 @@ module.exports.renderLoginForm = (req,res)=>{
 
 module.exports.loginUser = (req, res, next) => {
     res.locals.redirectUrl = req.session.redirectUrl;
-    next();
+    const redirectUrl = res.locals.redirectUrl || "/listings";
+    res.redirect(redirectUrl);
   },
   async (req, res) => {
     console.log(res.locals.redirectUrl);
