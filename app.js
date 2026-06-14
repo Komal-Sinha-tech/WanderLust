@@ -1,3 +1,8 @@
+if(production.env.NODE_ENV != "production"){
+require('dotenv').config()
+}
+
+
 // Require all packages
 const express = require("express");
 const session = require("express-session");
