@@ -55,6 +55,11 @@
         <div><i class="fa-solid fa-snowflake"></i></div>
         <p>Arctic</p>
       </div>
+
+      <div class="filter">
+        <div><i class="fa-solid fa-wine-bottle"></i></div>
+        <p>Vineyards</p>
+      </div>
      
      <div class="tax-toggle">
       <div class="form-check-reverse form-switch">
@@ -75,6 +80,7 @@
     <p class="card-text">
       <b><%= listing.title %><br></b>
      &#8377;<%= Number(listing.price).toLocaleString("en-IN") %> / night
+     <i class="tax-info">&nbsp;+18% Gst </i>
     </p>
   </div>
 </div>

@@ -107,7 +107,8 @@ font-weight: 400 !important;
     margin-top: 1rem;
     display: flex;
     flex-wrap: wrap;
-    
+    align-items: center;
+
   }
 
   .filter{
@@ -124,4 +125,18 @@ font-weight: 400 !important;
 
   .filter p{
     font-size: 0.8rem;
+  }
+
+  .tax-info{
+    display: none;
+  }
+
+  .tax-toggle{
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+    height: 2.5rem;
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
   }
