@@ -94,15 +94,27 @@
 
         navigator.geolocation.watchPosition(success,error);
 
+        let marker,circle,zoomed;
+
+
         function success (position){
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           const accuracy = position.coords.accuracy;
 
-          let marker = L.marker([lat,lng,]).addTo(map);
-         let circle =  L.circle([lat,lng,],{ radius : accuracy}).addTo(map);
+          if(marker){
+            map.removeLayer(marker);
+            map.removeLayer(circle);
+          }
 
-          map.fitBounds(circle.getBounds());
+         marker = L.marker([lat,lng,]).addTo(map);
+         circle =  L.circle([lat,lng,],{ radius : accuracy}).addTo(map);
+         
+         if(!zoomed){
+         zoomed = map.fitBounds(circle.getBounds());
+         }
+          
+         map.setView([lat,lng]);
         }
 
         function error(err){
