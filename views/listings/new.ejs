@@ -16,6 +16,29 @@
           </textarea>
           <div class="invalid-feedback">Please enter short description</div>
     </div>
+     <!-- CATEGORY FIELD -->
+    <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select
+            name="listing[category]"
+            class="form-select"
+            required
+        >
+            <option value="">Select Category</option>
+            <option value="trending">Trending</option>
+            <option value="rooms">Rooms</option>
+            <option value="iconic-cities">Iconic Cities</option>
+            <option value="mountains">Mountains</option>
+            <option value="castles">Castles</option>
+            <option value="amazing-pools">Amazing Pools</option>
+            <option value="camping">Camping</option>
+            <option value="farms">Farms</option>
+            <option value="luxury">Luxury</option>
+            <option value="arctic">Arctic</option>
+            <option value="vineyards">Vineyards</option>
+        </select>
+    </div>
+
      <div class="mb-3">
         <label for="image" class="form-label">Image</label>
         <input name="listing[image]" placeholder="enter image URL/link" type="file" class="form-control">

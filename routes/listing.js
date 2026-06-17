@@ -3,9 +3,7 @@ const router = express.Router();
 const Listing = require("../models/listing.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const {isLoggedIn,isOwner,validateListing} = require("../middleware.js");
-
 const listingController = require("../controllers/listings.js");
-
 const multer  = require('multer');
 const {storage} = require("../cloudConfig.js");
 const upload = multer({ storage });
@@ -21,6 +19,14 @@ router
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
+// Category Route
+router.get("/category/:category", async (req, res) => {
+    const { category } = req.params;
+
+    const allListings = await Listing.find({ category });
+
+    res.render("listings/index.ejs", { allListings });
+});
 
 router
 .route("/:id")
@@ -34,6 +40,7 @@ router
 
 //Edit Route
 router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
+
 
 
 module.exports=router;

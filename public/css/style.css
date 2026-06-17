@@ -106,17 +106,19 @@ font-weight: 400 !important;
 #filters{
     margin-top: 1rem;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-
-  }
-
-  .filter{
+    overflow-x: auto;
+}
+  
+.filter{
+    text-decoration: none;
+    color: inherit;
     text-align: center;
-    margin-right: 2rem;
-    margin-top: 2rem;
+    margin-right: 1rem;
     opacity: 0.7;
-  }
+    flex-shrink: 0;
+}
 
   .filter:hover{
     opacity: 1;
@@ -131,17 +133,25 @@ font-weight: 400 !important;
     display: none;
   }
 
-  .tax-toggle{
+ .tax-toggle{
     border: 1px solid black;
     border-radius: 1rem;
     padding: 1rem;
     height: 2.5rem;
-    margin-left: 2rem;
+    margin-left: auto;  /* pushes it to the right */
     display: flex;
     align-items: center;
-  }
+    flex-shrink: 0;
+}
+.filters-container{
+    display:flex;
+    align-items:center;
+}
 
 #map {
     height: 400px;
     width: 100%;
 }
+
+
+
