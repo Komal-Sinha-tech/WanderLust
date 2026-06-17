@@ -92,3 +92,18 @@ module.exports.index = async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
 };
+
+module.exports.indexSearch = async (req, res) => {
+
+    const { search } = req.query;
+
+    const allListings = await Listing.find({
+        $or: [
+            { title: { $regex: search, $options: "i" } },
+            { location: { $regex: search, $options: "i" } },
+            { country: { $regex: search, $options: "i" } }
+        ]
+    });
+
+    res.render("listings/index.ejs", { allListings });
+};

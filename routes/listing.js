@@ -19,6 +19,10 @@ router
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
+
+//search route
+router.get("/search", wrapAsync(listingController.indexSearch));
+
 // Category Route
 router.get("/category/:category", async (req, res) => {
     const { category } = req.params;
@@ -27,6 +31,8 @@ router.get("/category/:category", async (req, res) => {
 
     res.render("listings/index.ejs", { allListings });
 });
+
+
 
 router
 .route("/:id")
@@ -40,6 +46,7 @@ router
 
 //Edit Route
 router.get("/:id/edit",isLoggedIn,isOwner,wrapAsync(listingController.renderEditForm));
+//search 
 
 
 
