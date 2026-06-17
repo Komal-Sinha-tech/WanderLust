@@ -140,3 +140,8 @@ font-weight: 400 !important;
     display: flex;
     align-items: center;
   }
+
+#map {
+    height: 400px;
+    width: 100%;
+}
