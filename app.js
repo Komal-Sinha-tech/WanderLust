@@ -54,6 +54,9 @@ app.engine("ejs", ejsMate);
 
 app.use(express.static(path.join(__dirname, "/public")));
 
+console.log("MongoStore =", MongoStore);
+console.log("MongoStore type =", typeof MongoStore);
+
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
