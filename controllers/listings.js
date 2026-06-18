@@ -2,11 +2,6 @@ const Listing = require("../models/listing.js");
 const { listingSchema } = require("../schema.js");
 const ExpressError = require("../utils/ExpressError");
 
-module.exports.index = async(req,res)=>{
-    const allListing = await Listing.find();
-    res.render("./listings/index.ejs",{allListing});
-}
-
 module.exports.renderNewForm = async(req,res)=>{
   console.log(req.user);
     res.render("./listings/new.ejs");
@@ -24,7 +19,7 @@ module.exports.showListing = async(req,res)=>{
      .populate("owner");
      if(!listing){
         req.flash("error", "Listing you requested does not exist!");
-        res.redirect("/listings");
+       return res.redirect("/listings");
      }
     res.render("./listings/show.ejs",{listing});   
 }
@@ -50,13 +45,16 @@ module.exports.renderEditForm = async (req, res) => {
   const listing = await Listing.findById(id);
    if(!listing){
         req.flash("error", "Listing you requested does not exist!");
-        res.redirect("/listings");
+        return res.redirect("/listings");
      }
-     let originalImageUrl = listing.image.url;
-      originalImageUrl = listing.image.url.replace(
-  "/upload",
-  "/upload/h_300,w_250"
-);
+     let originalImageUrl = "";
+
+if (listing.image && listing.image.url) {
+    originalImageUrl = listing.image.url.replace(
+        "/upload",
+        "/upload/h_300,w_250"
+    );
+}
 console.log(originalImageUrl);
   res.render("listings/edit.ejs", { listing, originalImageUrl });
 }

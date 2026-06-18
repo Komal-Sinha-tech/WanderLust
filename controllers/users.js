@@ -29,21 +29,19 @@ module.exports.renderLoginForm = (req,res)=>{
     res.render("users/login.ejs")
 }
 
-module.exports.loginUser = (req, res, next) => {
-    res.locals.redirectUrl = req.session.redirectUrl;
-    const redirectUrl = res.locals.redirectUrl || "/listings";
-    res.redirect(redirectUrl);
-  },
-  async (req, res) => {
-    console.log(res.locals.redirectUrl);
+
+ module.exports.loginUser = (req, res) => {
     req.flash("success", "Welcome to WanderLust!");
+
     const redirectUrl = res.locals.redirectUrl || "/listings";
+
     delete req.session.redirectUrl;
+
     res.redirect(redirectUrl);
-  }
+};
 
   module.exports.logoutUser = (req,res,next)=>{
-    req.logOut((err)=>{
+    req.logout((err)=>{
         if(err){
            return  next();
         }

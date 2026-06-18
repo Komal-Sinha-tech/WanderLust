@@ -7,6 +7,7 @@ if (process.env.NODE_ENV !== "production") {
 // Require all packages
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const app = express();
 const mongoose = require("mongoose");
@@ -53,9 +54,22 @@ app.engine("ejs", ejsMate);
 
 app.use(express.static(path.join(__dirname, "/public")));
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: "ThisIsAVeryLongRandomSecretForWanderLust2025!@#$%^&*",
+  },
+  touchAfter: 24 * 3600
+});
+
+store.on("error",(err)=>{
+    console.log("error in MONGO-session store",err);
+})
+
 // Session
 const sessionOptions = {
-    secret: "secretCode",
+    store,
+   secret: "ThisIsAVeryLongRandomSecretForWanderLust2025!@#$%^&*",
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -108,17 +122,23 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-// Error
+// 404 Handler
 app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
 });
 
+// Error Handler
 app.use((err, req, res, next) => {
-    let { status = 500, message = "something went wrong" } = err;
+    console.error(err);
+
+    let { status = 500, message = "Something went wrong" } = err;
+
+    if (res.headersSent) {
+        return next(err);
+    }
 
     res.status(status).render("listings/error.ejs", { err });
 });
-
 // Server confirmation
 app.listen(8080, () => {
     console.log("server is running on port 8080");
