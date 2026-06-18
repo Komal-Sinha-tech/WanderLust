@@ -53,13 +53,7 @@ app.engine("ejs", ejsMate);
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-console.log("MongoStore =", MongoStore);
-console.log("MongoStore type =", typeof MongoStore);
 
-
-store.on("error",(err)=>{
-    console.log("error in MONGO-session store",err);
-})
 
 // Session
 const sessionOptions = {
