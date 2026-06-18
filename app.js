@@ -7,7 +7,6 @@ if (process.env.NODE_ENV !== "production") {
 // Require all packages
 const express = require("express");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const app = express();
 const mongoose = require("mongoose");
@@ -57,13 +56,6 @@ app.use(express.static(path.join(__dirname, "/public")));
 console.log("MongoStore =", MongoStore);
 console.log("MongoStore type =", typeof MongoStore);
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 3600,
-});
 
 store.on("error",(err)=>{
     console.log("error in MONGO-session store",err);
@@ -71,15 +63,14 @@ store.on("error",(err)=>{
 
 // Session
 const sessionOptions = {
-    store,
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         httpOnly: true,
-    },
+    }
 };
 
 app.use(session(sessionOptions));
